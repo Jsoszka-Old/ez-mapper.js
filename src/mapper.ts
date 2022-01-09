@@ -1,31 +1,4 @@
-class User {
-    firstName: string = ""
-    lastName: string = ""
-    address: Address = new Address();
-
-}
-
-class UserDTO {
-    firstName: string = ""
-    lastName: string = ""
-    fullName: string = ""
-    address: AddressDTO = new AddressDTO()
-}
-
-class Address {
-    city: string = "Richmond"
-    state: string = "florida"
-}
-
-class AddressDTO {
-    city: string = ""
-    state: string = ""
-    addressString: string = ""
-}
-
-
-
-function map(source: any, dest: any, customMapper: (src: any, dest: any) => any = (src,dest)=>{}) {
+export function map<Src, Dest>(source: any, dest: any, customMapper: (src: Src, dest: Dest) => void = (src, dest) => { }): Dest {
     const sourceKeys = Object.keys(source);
 
     sourceKeys.forEach(key => {
@@ -47,13 +20,3 @@ function map(source: any, dest: any, customMapper: (src: any, dest: any) => any 
 
 
 
-
-const user = new User();
-user.firstName = "Jon"
-user.lastName = "Soszka"
-
-const userDTO = new UserDTO();
-console.log(map(user, userDTO, (src: User,dest: UserDTO) => {
-    dest.fullName = src.firstName + ' ' + src.lastName
-    dest.address.addressString = `${src.address.city}, ${src.address.state}`
-}));
