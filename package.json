@@ -1,0 +1,17 @@
+{
+  "name": "ts-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/mapper.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.8",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
