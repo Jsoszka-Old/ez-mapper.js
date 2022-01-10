@@ -61,10 +61,8 @@ describe("mapper", () => {
 
             const src = new CustomMapping()
             const dst = new CustomMappingDto()
-            map(src, dst, {
-                customMapper: (src, dst) => {
-                    dst.fullName = src.firstName + " " + src.lastName
-                }
+            map(src, dst, (src, dst) => {
+                dst.fullName = src.firstName + " " + src.lastName
             })
 
             expect(dst.firstName).toEqual(src.firstName)

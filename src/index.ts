@@ -10,13 +10,7 @@ export function init(options: GlobalOptions) {
     globalOptions = options;
 }
 
-
-interface mapOptions<Src, Dest> {
-    customMapper?: (src: Src, dest: Dest) => void
-}
-
-
-export function map<Source, Dest>(source: Source, dest: Dest, options?: mapOptions<Source, Dest>): typeof dest {
+export function map<Source, Dest>(source: Source, dest: Dest, customMapper?: (src: Source, dest: Dest) => void): typeof dest {
 
     //original destination and source props
     let destProps = Object.keys(dest)
@@ -52,8 +46,8 @@ export function map<Source, Dest>(source: Source, dest: Dest, options?: mapOptio
         }
     })
 
-    if (options?.customMapper) {
-        options.customMapper(source, dest)
+    if (customMapper) {
+        customMapper(source, dest)
     }
 
     return dest
