@@ -88,7 +88,7 @@ map(src, dst, (src, dst) => {
 ### Reusing Custom Mappings
 Lets say we dont want to write the custom mappings every time we map between `User` and `UserDto` ez-mapper does not offer anyway to do this out of the box. The reason for this is that ez-mapper aims to be a lightweight no configuration required library. The way other tools achieve this like [AutoMapperTypescript](https://automapperts.netlify.app/) is to create a large configuration object to hold all of your custom mappings.
 
-So what can we do instead? We would advise creating creating a mapping method in the Dto and using ez-mapper there like such. In our opinion this is better than maintaining a configuration file because it keeps the logic close to the Dto itself.
+So what can we do instead? We would advise creating a mapping method in the Dto and using ez-mapper there like such. In our opinion this is better than maintaining a configuration file because it keeps the logic close to the Dto itself.
 
 ```js
 //UserDto.ts
