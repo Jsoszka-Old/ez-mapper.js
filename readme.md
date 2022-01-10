@@ -1,6 +1,6 @@
 # ez-mapper.js
 
-A simple, zero dependency object mapper for javascript and typescript no configuration required
+A simple, zero dependency object mapper for javascript and typescript.
 ### Typescript
 ez-mapper is written in typescript and has full typing support.
 
@@ -39,7 +39,7 @@ user.firstName = "Jonathan"
 user.lastName = "Soszka"
 
 const userDto = new UserDto()
-map(user,UserDto);
+map(user,userDto);
 
 console.log(userDto) // {firstName: 'Jonathan', lastName: 'Soszka}
 ```
@@ -88,7 +88,7 @@ map(src, dst, (src, dst) => {
 ### Reusing Custom Mappings
 Lets say we dont want to write the custom mappings every time we map between `User` and `UserDto` ez-mapper does not offer anyway to do this out of the box. The reason for this is that ez-mapper aims to be a lightweight no configuration required library. The way other tools achieve this like [AutoMapperTypescript](https://automapperts.netlify.app/) is to create a large configuration object to hold all of your custom mappings.
 
-So what can we do instead? We would advise creating creating a mapping method in the Dto and using ez-mapper there like such. In our opinion this is better than maintaining a configuration file because it keeps the logic close to the Dto itself.
+So what can we do instead? We would advise creating a mapping method in the Dto and using ez-mapper there like such. In our opinion this is better than maintaining a configuration file because it keeps the logic close to the Dto itself.
 
 ```js
 //UserDto.ts
@@ -103,6 +103,7 @@ class UserDTO {
         map(user,dto, (src,dst) => {
             dst.fullName = src.firstName + src.lastName
         })
+        return dto
     }
 }
 
