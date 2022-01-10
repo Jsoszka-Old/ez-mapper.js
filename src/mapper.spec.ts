@@ -105,10 +105,18 @@ describe("mapper", () => {
         const src = new ValueCopy()
         const dst = new ValueCopyDto();
 
-        init((src) => {
-            if (src.charAt(0) == '_')
-                return src.substring(1)
-            return src
+        // init(opts:(src) => {
+        //     if (src.charAt(0) == '_')
+        //         return src.substring(1)
+        //     return src
+        // })
+
+        init({
+            sourceTransform: (src) => {
+                if (src.charAt(0) == '_')
+                    return src.substring(1)
+                return src
+            }
         })
         map(src, dst)
         expect(dst.firstName).toEqual(src._firstName)

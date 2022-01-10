@@ -1,23 +1,35 @@
 
 
-let _srcTransform = (s) => s
 
-export function init(srcTransform: (src: string) => string) {
-    _srcTransform = srcTransform
+
+interface GlobalOptions {
+    sourceTransform?: (src: string) => string
+    destTransform?: (src: string) => string
 }
+
+let globalOptions: GlobalOptions
+
+export function init(options: GlobalOptions) {
+    globalOptions = options;
+}
+
 
 interface mapOptions<Src, Dest> {
     customMapper?: (src: Src, dest: Dest) => void
 }
 
 
-export function map<Src, Dest>(source: any, dest: any, options?: mapOptions<Src,Dest>): Dest {
+export function map<Src, Dest>(source: any, dest: any, options?: mapOptions<Src, Dest>): Dest {
     let sourceKeys = Object.keys(source);
 
 
 
     sourceKeys.forEach(srcKey => {
-        const dstKey = _srcTransform(srcKey)
+        let dstKey = srcKey
+
+        if (globalOptions?.sourceTransform)
+            dstKey = globalOptions.sourceTransform(srcKey)
+
         if (dstKey in dest) {
             if (source[srcKey] instanceof Object) {
                 console.log(`${srcKey} is an object starting recursion`)
