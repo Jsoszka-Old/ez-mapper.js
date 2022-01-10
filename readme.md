@@ -1,11 +1,13 @@
 # ez-mapper.js
 
 A simple, zero dependency object mapper for javascript and typescript.
-### Typescript
-ez-mapper is written in typescript and has full typing support.
 
 # About
 ez-mapper is a tool to easily map properties from one object to another. for example if you have a `User` object which has all the properties of users that you might store in your database and a `UserDto` object which has only the fields you want to return from an API. ez-mapper can help you create the UserDto by mapping the matching properties from the `User` class
+
+### Typescript
+ez-mapper is written in typescript and has full typing support.
+
 
 # Getting Started
 Install ez-map using npm
