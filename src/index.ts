@@ -16,7 +16,7 @@ interface mapOptions<Src, Dest> {
 }
 
 
-export function map(source, dest: any, options?: mapOptions<typeof source, typeof dest>): typeof dest {
+export function map<Source, Dest>(source: Source, dest: Dest, options?: mapOptions<Source, Dest>): typeof dest {
 
     //original destination and source props
     let destProps = Object.keys(dest)
