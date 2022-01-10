@@ -1,6 +1,6 @@
 # ez-mapper.js
 
-A simple, zero dependency object mapper for javascript and typescript no configuration required
+A simple, zero dependency object mapper for javascript and typescript.
 ### Typescript
 ez-mapper is written in typescript and has full typing support.
 
