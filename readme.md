@@ -103,6 +103,7 @@ class UserDTO {
         map(user,dto, (src,dst) => {
             dst.fullName = src.firstName + src.lastName
         })
+        return dto
     }
 }
 
