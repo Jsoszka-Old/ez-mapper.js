@@ -31,8 +31,8 @@ class UserDTO {
 
 and we have an instance of `User` we would like to map to an instance of `UserDto`, here is how we would do it
 
-```ts
-import { map } from "ez-mapper"
+```js
+import { map } from "../../src"
 
 const user = new User()
 user.firstName = "Jonathan"
@@ -42,7 +42,6 @@ const userDto = new UserDto()
 map(user,UserDto);
 
 console.log(userDto) // {firstName: 'Jonathan', lastName: 'Soszka}
-
 ```
 
 This is great we can perform simple mappings easily, here we built our own `User` instance but in reality it would probably already be built and you would just need to make the DTO and map it.
