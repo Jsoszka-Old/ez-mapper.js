@@ -3,5 +3,6 @@
         "declaration": true,
         "outDir": "dist",
     },
-    "exclude": ["**/*.spec.ts"]
+    "exclude": ["**/*.spec.ts"],
+    "include": ["src/*"]
 }

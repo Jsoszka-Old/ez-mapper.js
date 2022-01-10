@@ -17,10 +17,10 @@ user.lastName = "last"
 
 const userDTO = new UserDTO();
 
-map<User, UserDTO>(user, userDTO, {
-    customMapper: (src, dest) => {
+map<User, UserDTO>(user, userDTO,
+    (src, dest) => {
         dest.fullName = src.firstName + " " + src.lastName
-    }
-})
+
+    })
 
 console.log(userDTO) // {fistName: "first", lastName: "last", fullName: "first + last"}
