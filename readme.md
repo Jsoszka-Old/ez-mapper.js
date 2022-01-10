@@ -41,6 +41,7 @@ import { map } from "../../src"
 const user = new User()
 user.firstName = "Jonathan"
 user.lastName = "Soszka"
+user.sensitveField = "superSecret"
 
 const userDto = new UserDto()
 map(user,userDto);
