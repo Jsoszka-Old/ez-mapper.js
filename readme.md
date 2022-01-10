@@ -15,7 +15,7 @@ or `yarn`
 
 ## Mapping between objects
 
-Lets say we have the following classes 
+Lets say we have the following classes, `User` and `UserDto` 
 
 ```js
 class User {
@@ -29,7 +29,7 @@ class UserDTO {
 }
 ```
 
-and we have an instance of `User` we would like to map to an instance of `UserDto`, here is how we would do it
+Lets now say we have an instance of `User` that we would like to map to an instance of `UserDto`. Here is how we would do it
 
 ```js
 import { map } from "../../src"
@@ -44,10 +44,10 @@ map(user,UserDto);
 console.log(userDto) // {firstName: 'Jonathan', lastName: 'Soszka}
 ```
 
-This is great we can perform simple mappings easily, here we built our own `User` instance but in reality it would probably already be built and you would just need to make the DTO and map it.
+This is great we can perform simple mappings easily. Here we built our own `User` instance but in reality it would probably already be built and you would just need to make the DTO and map it.
 
 ### Nested properties
-ez-mapper will also copy all nested properties by value. Lets assume our `User` and `UserDto` classes now have a property `Address` which is of type `Address` and `AddressDto` respectively
+ez-mapper will also copy all nested properties by value. Lets assume our `User` and `UserDto` classes now also have a property `address` which is of type `Address` and `AddressDto` respectively
 ```js
 class Address {
     city: string = ""
@@ -72,9 +72,10 @@ map(user,UserDto);
 console.log(userDto.address) // {city:"Richmond", state:"VA"}
 
 ```
+The nested values are copied by value not by reference, this means altering the destination object will not have side effects on the source object.
 
 ### Custom Mappings
-What if our DTO has some extra fields like for example `fullName`. we can take care of this using a `customMapper` passed to the map method
+What if our DTO has some extra fields like `fullName`. we can take care of this using a `customMapper` passed to the map method
 
 
 ```js
@@ -115,7 +116,7 @@ const userDto = UserDto.mapFrom(user)
 ez-mapper currently has one configuration option which can be applied called `transforms` a transform is a function applied to all property names on both the source and destination target before matching occurs.
 
 ### Default Transformer
-the default transformer removes all underscores from property names and converts them to lowercase before attempting to find matches. this would mean that if we had two objects one with a property `FirstName` and another with a property `first_name` ez-mapper would automatically map these two properties. if you do not like this it can be turned off by adding a custom transformer to do nothing at all, see the Disable Transforms section
+the default transformer removes all underscores from property names and also converts all property names to lowercase before attempting to find matches. This would mean that if we had two objects one with a property `FirstName` and another with a property `first_name` ez-mapper would automatically map these two properties. if you do not like this it can be turned off by adding a custom transformer to do nothing at all, see the Disable Transforms section
 
 ### Custom Transformer
 to add a custom transformer to ez-mapper you need to use the `init` method somewhere in your project before any mappings are performed.
