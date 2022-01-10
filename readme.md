@@ -10,7 +10,7 @@ ez-mapper is written in typescript and has full typing support.
 
 
 # Getting Started
-Install ez-map using npm
+Install ez-mapper using npm
 
 ```npm install ez-mapper```
 
