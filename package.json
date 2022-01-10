@@ -1,13 +1,16 @@
 {
-  "name": "ts-map",
-  "version": "1.0.0",
+  "name": "ez-mapper",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/mapper.ts"
+    "start": "ts-node src/mapper.ts",
+    "build": "tsc",
+    "clean": "rm -r dist"
   },
-  "author": "",
+  "author": "Jonathan Soszka",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^27.4.0",

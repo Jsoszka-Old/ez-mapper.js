@@ -1,4 +1,4 @@
-import { map } from "./mapper"
+import { map, init } from "."
 describe("mapper", () => {
     it("Can map based off exact name match", () => {
         class NameConvention {
@@ -48,26 +48,68 @@ describe("mapper", () => {
         expect(dst.address.state).toEqual(src.address.state)
 
     }),
-    it('can perform custom mappings', () => {
-        class CustomMapping {
+        it('can perform custom mappings', () => {
+            class CustomMapping {
+                firstName = "Jonathan"
+                lastName = "Soszka"
+            }
+            class CustomMappingDto {
+                firstName = ""
+                lastName = ""
+                fullName = ""
+            }
+
+            const src = new CustomMapping()
+            const dst = new CustomMappingDto()
+            map<CustomMapping, CustomMappingDto>(src, dst, (src, dst) => {
+                dst.fullName = src.firstName + " " + src.lastName
+            })
+
+            expect(dst.firstName).toEqual(src.firstName)
+            expect(dst.lastName).toEqual(src.lastName)
+            expect(dst.fullName).toEqual(src.firstName + " " + src.lastName)
+
+        })
+    it("copies by value only", () => {
+        class ValueCopy {
             firstName = "Jonathan"
             lastName = "Soszka"
         }
-        class CustomMappingDto {
+        class ValueCopyDto {
             firstName = ""
             lastName = ""
-            fullName = ""
         }
 
-        const src = new CustomMapping()
-        const dst = new CustomMappingDto()
-        map<CustomMapping, CustomMappingDto>(src, dst, (src, dst) => {
-            dst.fullName = src.firstName + " " + src.lastName
-        })
+        const src = new ValueCopy()
+        const dst = new ValueCopyDto();
 
+        map(src, dst)
         expect(dst.firstName).toEqual(src.firstName)
         expect(dst.lastName).toEqual(src.lastName)
-        expect(dst.fullName).toEqual(src.firstName + " " + src.lastName)
 
+        dst.firstName = "Changed!"
+        expect(src.firstName).not.toEqual(dst.firstName)
+    })
+    it('can be configured to transform src properties', () => {
+        class ValueCopy {
+            _firstName = "Jonathan"
+            lastName = "Soszka"
+
+        }
+        class ValueCopyDto {
+            firstName = ""
+            lastName = ""
+        }
+        const src = new ValueCopy()
+        const dst = new ValueCopyDto();
+
+        init((src) => {
+            if (src.charAt(0) == '_')
+                return src.substring(1)
+            return src
+        })
+        map(src, dst)
+        expect(dst.firstName).toEqual(src._firstName)
+        expect(dst.lastName).toEqual(src.lastName)
     })
 })
