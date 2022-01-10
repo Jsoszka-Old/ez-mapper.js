@@ -18,7 +18,7 @@ or `yarn`
 
 Lets say we have the following classes 
 
-```
+```js
 class User {
     firstName: string = ""
     lastName: string = ""
@@ -32,7 +32,7 @@ class UserDTO {
 
 now we have an instance of `User` we would like to map to an instance of `UserDto`, here is how we would do it
 
-```ts
+```js
 import { map } from "../../src"
 
 const user = new User()
@@ -43,7 +43,6 @@ const userDto = new UserDto()
 map(user,UserDto);
 
 console.log(userDto) // {firstName: 'Jonathan', lastName: 'Soszka}
-
 ```
 
 This is great we can perform simple mappings easily, here we built our own `User` instance but in reality it would probably already be built and you would just need to make the DTO and map it.
@@ -61,7 +60,7 @@ map(user, userDTO, {
 ```
 ### Nested properties
 ez-mapper will also copy all nested properties by value. Lets assume our `User` and `UserDto` classes now have a property `Address` which is of type `Address` and `AddressDto` respectfully
-```
+```js
 class Address {
     city: string = ""
     state: string = ""
