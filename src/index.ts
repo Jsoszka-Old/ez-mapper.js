@@ -6,8 +6,12 @@ export function init(srcTransform: (src: string) => string) {
     _srcTransform = srcTransform
 }
 
+interface mapOptions<Src, Dest> {
+    customMapper?: (src: Src, dest: Dest) => void
+}
 
-export function map<Src, Dest>(source: any, dest: any, customMapper: (src: Src, dest: Dest) => void = (src, dest) => { }): Dest {
+
+export function map<Src, Dest>(source: any, dest: any, options?: mapOptions<Src,Dest>): Dest {
     let sourceKeys = Object.keys(source);
 
 
@@ -24,8 +28,8 @@ export function map<Src, Dest>(source: any, dest: any, customMapper: (src: Src, 
         }
     })
 
-    if (customMapper)
-        customMapper(source, dest)
+    if (options?.customMapper)
+        options.customMapper(source, dest)
 
     return dest
 }
