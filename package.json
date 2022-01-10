@@ -1,12 +1,13 @@
 {
   "name": "ez-mapper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist/*"],
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/mapper.ts",
+    "start": "ts-node src/index.ts",
     "build": "tsc",
     "clean": "rm -r dist"
   },

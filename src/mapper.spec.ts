@@ -1,4 +1,4 @@
-import { map, init } from "."
+import { map, init, defaultTransformer } from "."
 describe("mapper", () => {
     it("Can map based off exact name match", () => {
         class NameConvention {
@@ -73,29 +73,37 @@ describe("mapper", () => {
 
         })
     it("copies by value only", () => {
-        class ValueCopy {
-            firstName = "Jonathan"
-            lastName = "Soszka"
-        }
-        class ValueCopyDto {
-            firstName = ""
-            lastName = ""
+        const src = {
+            firstName: "Jonathan",
+            lastName: "soszka",
+            nested: {
+                value: "val"
+            }
         }
 
-        const src = new ValueCopy()
-        const dst = new ValueCopyDto();
+        const dst = {
+            firstName: "",
+            lastName: "",
+            nested: {
+                value: ""
+            }
+        }
 
         map(src, dst)
         expect(dst.firstName).toEqual(src.firstName)
         expect(dst.lastName).toEqual(src.lastName)
+        expect(dst.nested.value).toEqual(src.nested.value)
 
         dst.firstName = "Changed!"
         expect(src.firstName).not.toEqual(dst.firstName)
+
+        dst.nested.value = "Changed!"
+        expect(dst.nested.value).not.toEqual(src.nested.value)
     })
     it('can be configured to transform src properties', () => {
         class ValueCopy {
-            _firstName = "Jonathan"
-            lastName = "Soszka"
+            EXfirstName = "Jonathan"
+            EXlastName = "Soszka"
 
         }
         class ValueCopyDto {
@@ -105,21 +113,21 @@ describe("mapper", () => {
         const src = new ValueCopy()
         const dst = new ValueCopyDto();
 
-        // init(opts:(src) => {
-        //     if (src.charAt(0) == '_')
-        //         return src.substring(1)
-        //     return src
-        // })
-
         init({
-            sourceTransform: (src) => {
-                if (src.charAt(0) == '_')
-                    return src.substring(1)
-                return src
-            }
+            transform: (src) => src.replace("EX", "")
         })
         map(src, dst)
-        expect(dst.firstName).toEqual(src._firstName)
-        expect(dst.lastName).toEqual(src.lastName)
+        expect(dst.firstName).toEqual(src.EXfirstName)
+        expect(dst.lastName).toEqual(src.EXlastName)
+    })
+})
+
+
+describe("defaultTransformer", () => {
+    it("strips underscores", () => {
+        const original = "test_string"
+        const transformed = defaultTransformer(original);
+        expect(original).toEqual("test_string")
+        expect(transformed).toEqual("teststring")
     })
 })
