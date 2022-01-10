@@ -77,7 +77,7 @@ user.address.city = "Richmond"
 user.address.state = "VA"
 
 const userDto = new UserDto()
-map(user,UserDto);
+map(user,userDto);
 
 console.log(userDto.address) // {city:"Richmond", state:"VA"}
 
