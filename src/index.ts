@@ -6,41 +6,40 @@ let globalOptions: GlobalOptions = {
     transform: defaultTransformer
 }
 
+export function defaultTransformer(src: string): string {
+    let transformed = src
+    transformed = transformed.replace("_", "").toLowerCase()
+    return transformed;
+}
+
 export function init(options: GlobalOptions) {
     globalOptions = options;
 }
 
 export function map<Source, Dest>(source: Source, dest: Dest, customMapper?: (src: Source, dest: Dest) => void): typeof dest {
+    //build a map of transformedProperty => property
+    let destPropMap = {}
+    let sourcePropMap = {}
 
-    //original destination and source props
-    let destProps = Object.keys(dest)
-    let sourceProps = Object.keys(source)
+    Object.keys(dest).forEach(prop => {
+        destPropMap[globalOptions.transform(prop)] = prop
+    })
 
-    //transformed destination and source props
-    let destPropsT = destProps.map(x => globalOptions.transform(x))
-    let sourcePropsT = sourceProps.map(x => globalOptions.transform(x))
-
-    //Creating maps to hold relation of transformedProperty => originalProperty
-    let destPropMap = new Map();
-    let sourcePropMap = new Map();
-
-    for (let i = 0; i < destProps.length; i++) {
-        destPropMap.set(destPropsT[i], destProps[i])
-    }
-
-    for (let i = 0; i < sourceProps.length; i++) {
-        sourcePropMap.set(sourcePropsT[i], sourceProps[i])
-    }
+    Object.keys(source).forEach(prop => {
+        sourcePropMap[globalOptions.transform(prop)] = prop
+    })
 
 
-    //find matches and set destination values
-    destPropsT.forEach(destPropT => {
-        if (sourcePropMap.has(destPropT)) {
-            const destProp = destPropMap.get(destPropT)
-            const srcProp = sourcePropMap.get(destPropT)
+    //iterate over transformed destination properties looking for matching transformed source properties
+    Object.keys(destPropMap).forEach(destPropT => {
+        if (sourcePropMap[destPropT]) {
+            const destProp = destPropMap[destPropT]
+            const srcProp = sourcePropMap[destPropT]
 
+            //if prop is an object map recursively
             if (source[srcProp] instanceof Object && dest[destProp] instanceof Object)
                 dest[destProp] = map(source[srcProp], dest[destProp])
+            //else just map the value
             else
                 dest[destProp] = source[srcProp]
         }
@@ -54,10 +53,3 @@ export function map<Source, Dest>(source: Source, dest: Dest, customMapper?: (sr
 }
 
 
-export function defaultTransformer(src: string): string {
-
-    let transformed = src
-    transformed = transformed.replace("_", "").toLowerCase()
-    return transformed;
-
-}
