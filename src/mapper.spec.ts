@@ -61,7 +61,7 @@ describe("mapper", () => {
 
             const src = new CustomMapping()
             const dst = new CustomMappingDto()
-            map<CustomMapping, CustomMappingDto>(src, dst, {
+            map(src, dst, {
                 customMapper: (src, dst) => {
                     dst.fullName = src.firstName + " " + src.lastName
                 }
