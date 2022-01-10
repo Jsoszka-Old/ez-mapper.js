@@ -39,7 +39,7 @@ user.firstName = "Jonathan"
 user.lastName = "Soszka"
 
 const userDto = new UserDto()
-map(user,UserDto);
+map(user,userDto);
 
 console.log(userDto) // {firstName: 'Jonathan', lastName: 'Soszka}
 ```
