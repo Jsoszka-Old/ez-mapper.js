@@ -38,7 +38,7 @@ class UserDTO {
 Lets now say we have an instance of `User` that we would like to map to an instance of `UserDto`. Here is how we would do it
 
 ```js
-import { map } from "../../src"
+import { map } from "ez-mapper"
 
 const user = new User()
 user.firstName = "Jonathan"
