@@ -26,7 +26,7 @@ Lets say we have the following classes, `User` and `UserDto`
 class User {
     firstName: string = ""
     lastName: string = ""
-    sensitiveField = ""
+    sensitiveField: string = ""
 }
 
 class UserDTO {
